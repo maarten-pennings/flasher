@@ -63,4 +63,44 @@ Note that while the `flash.cmd` script is running it prints all its findings
 to a windows console. It saves a copy to a the file `flash.log` in the same 
 directory as the script.
 
+
+## Example
+After creating a directory with the following content
+
+    ```
+    flash.cmd
+    mRPM.ino_v4.bin
+    esptool.exe
+    ```
+
+a double click on `flash.cmd` generates the following log file of its actions.
+
+    ```
+    flash.cmd by Maarten Pennings 
+      2017 Aug 28 ; 23:22; C:\Users\maarten\Desktop\flash 
+     
+    Flash tool found - with this script 
+      C:\Users\maarten\Desktop\flash\esptool.exe 
+     
+    Firmware found - with this script 
+      C:\Users\maarten\Desktop\flash\mRPM.ino_v4.bin 
+     
+    COM ports found: COM3  
+      Auto selected: COM3 
+     
+    Command 
+      C:\Users\maarten\Desktop\flash\esptool.exe  -cd nodemcu  -cb 512000  -cp COM3  -cf C:\Users\maarten\Desktop\flash\mRPM.ino_v4.bin 
+     
+    ========================================================================================= 
+    Uploading 235264 bytes from C:\Users\maarten\Desktop\flash\mRPM.ino_v4.bin to flash at 0x00000000
+    ................................................................................ [ 34% ]
+    ................................................................................ [ 69% ]
+    ......................................................................           [ 100% ]
+    ========================================================================================= 
+     
+    Completed successfully 
+      See C:\Users\maarten\Desktop\flash\flash.log for a copy of this output 
+    ```
+
+
 (end of doc)
