@@ -1,5 +1,6 @@
 @ECHO off
-REM 2017 Aug 26 Maarten Pennings
+REM v2  2017 Sep 09  Maarten Pennings  Fixed bug in flash successful test
+REM v1  2017 Aug 26  Maarten Pennings  Created for mRPM distribution
 
 
 SETLOCAL EnableExtensions EnableDelayedExpansion
@@ -8,7 +9,7 @@ REM The !xx! is executed for each occurrence, %xx% is executed per block.
 REM A block is either everything between ( and ), or otherwise a line.
 
 
-REM This script uses the following trick to do the Unix trick cccc=`CCCC`
+REM This script uses a trick to do the Unix assignment cccc=`CCCC`:
 REM   FOR /F "tokens=* USEBACKQ" %%F IN (`CCCC`) DO SET cccc=%%F
 
 
@@ -84,7 +85,7 @@ SET firm_base=!firm_base!!firm_sub!
 FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /o /d !firm_base!*.bin 2^> NUL`) DO SET firm_file=%%F
 SET firm_full=!firm_base!!firm_file!
 IF EXIST !firm_full! (
-  CALL :log "Firmware found -  - with Arduino IDE"
+  CALL :log "Firmware found - with Arduino IDE"
   CALL :log "  !firm_full!"
   CALL :log ""
 ) ELSE (
@@ -169,6 +170,7 @@ IF %ERRORLEVEL% GTR 0 (
   SET fail_msg=Flashing failed
   GOTO :abort
 ) 
+SET cmd_result=NotFound
 FOR /f "tokens=* delims=" %%g in ('findstr "100" %LOGFILE%') DO SET cmd_result=%%g
 IF "Q!cmd_result:100=!" == "Q!cmd_result!" (
   SET fail_msg=Image was not flashed - try running script again
