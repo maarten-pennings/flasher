@@ -1,5 +1,5 @@
 # Flasher
-Script to facilitate flashing an ESP8266/NodeMCU without installing a full IDE.
+Windows script to facilitate flashing an ESP8266/NodeMCU without installing a full IDE.
 
 
 ## Introduction
@@ -65,15 +65,19 @@ directory as the script.
 
 
 ## Example
-After creating a directory with the following content
+Create a directory (e.g. `flash` on the desktop) with the following content
 
 ```
 flash.cmd
-mRPM.ino_v4.bin
 esptool.exe
+mRPM.ino_v4.bin
 ```
 
-a double click on `flash.cmd` generates the following log file of its actions.
+The file `flash.cmd` is delivered by this project. The `esptool.exe` can be downloaded
+from [Christian Klippel](https://github.com/igrr/esptool-ck/releases). The `bin` file 
+is some binary that needs to be flashed.
+
+A double click on `flash.cmd` generates the following log file of its actions.
 
 ```
 flash.cmd by Maarten Pennings 
