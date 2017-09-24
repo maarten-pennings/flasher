@@ -24,7 +24,7 @@ copy /y NUL  %LOGFILE% > NUL
 FOR /F "tokens=* USEBACKQ" %%F IN (`DATE /T`) DO SET log_date=%%F
 FOR /F "tokens=* USEBACKQ" %%F IN (`TIME /T`) DO SET log_time=%%F
 SET log_dir=%cd%
-CALL :log "flash.cmd by Maarten Pennings
+CALL :log "flash.cmd by Maarten Pennings"
 CALL :log "  %log_date%; %log_time%; %log_dir%"
 CALL :log ""
 
