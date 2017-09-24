@@ -80,9 +80,9 @@ IF EXIST !firm_full! (
 )
 
 SET firm_base=%appdata%\..\Local\Temp\
-FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /o /d !firm_base!arduino_build_* 2^> NUL`) DO SET firm_sub=%%F\
+FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /od !firm_base!arduino_build_* 2^> NUL`) DO SET firm_sub=%%F\
 SET firm_base=!firm_base!!firm_sub!
-FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /o /d !firm_base!*.bin 2^> NUL`) DO SET firm_file=%%F
+FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /od !firm_base!*.bin 2^> NUL`) DO SET firm_file=%%F
 SET firm_full=!firm_base!!firm_file!
 IF EXIST !firm_full! (
   CALL :log "Firmware found - with Arduino IDE"
