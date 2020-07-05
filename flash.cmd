@@ -1,4 +1,5 @@
 @ECHO off
+REM v3  2020 Jul 05  Maarten Pennings  Fixed bug in file absent test
 REM v2  2017 Sep 09  Maarten Pennings  Fixed bug in flash successful test
 REM v1  2017 Aug 26  Maarten Pennings  Created for mRPM distribution
 
@@ -70,6 +71,7 @@ REM === Find the firmware ===================================================
 
 
 SET firm_base=%cd%\
+SET firm_file=:
 FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b !firm_base!*.bin 2^> NUL`) DO SET firm_file=%%F
 SET firm_full=!firm_base!!firm_file!
 IF EXIST !firm_full! (

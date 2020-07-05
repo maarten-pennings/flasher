@@ -13,7 +13,7 @@ Or they have to learn the command line interface of the
 This project delivers a Windows batch script (`flash.cmd`) that should 
 deliver a "one-click" flash experience. It relies on the 
 [esptool](https://github.com/igrr/esptool-ck) 
-from Christian Klippel to do the actual flashing.
+from Christian Klippel and Ivan Grokhotkov to do the actual flashing.
 
 
 ## Concepts
@@ -34,6 +34,8 @@ ESP8266 has been installed, and tries to pick up `esptool.exe` there.
 So, if your PC has Arduino with ESP8266, there is no need to download 
 a copy of the esptool.
 
+As of 2020, I have added the [esptool binary](https://github.com/igrr/esptool-ck/releases/download/0.4.13/esptool-0.4.13-win32.zip) 
+to this project, to make it even more "one-click".
 
 ### Find firmware image
 By default the `flash.cmd` script looks for a binary firmware file 
@@ -73,9 +75,8 @@ esptool.exe
 mRPM.ino_v4.bin
 ```
 
-The file `flash.cmd` is delivered by this project. The `esptool.exe` can be downloaded
-from [Christian Klippel](https://github.com/igrr/esptool-ck/releases). The `bin` file 
-is some binary that needs to be flashed.
+The file `flash.cmd` and `esptool.exe` are delivered by this project. 
+The `bin` file is some binary that needs to be flashed.
 
 A double click on `flash.cmd` generates the following log file of its actions.
 
