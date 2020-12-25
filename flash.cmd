@@ -1,4 +1,5 @@
 @ECHO off
+REM v4  2020 Dec 25  Maarten Pennings  Now allows spaces in path (but uses ' io " for log)
 REM v3  2020 Jul 05  Maarten Pennings  Fixed bug in file absent test
 REM v2  2017 Sep 09  Maarten Pennings  Fixed bug in flash successful test
 REM v1  2017 Aug 26  Maarten Pennings  Created for mRPM distribution
@@ -44,7 +45,7 @@ IF EXIST !tool_full! (
 
 SET tool_base=%appdata%\..\Local\Arduino15\packages\esp8266\tools\esptool\
 IF EXIST !tool_base! (
-  FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b !tool_base!`) DO SET tool_sub=%%F\
+  FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b "!tool_base!"`) DO SET tool_sub=%%F\
   SET tool_full=!tool_base!!tool_sub!esptool.exe
   IF EXIST !tool_full! (
     CALL :log "Flash tool found - with Arduino IDE"
@@ -72,7 +73,7 @@ REM === Find the firmware ===================================================
 
 SET firm_base=%cd%\
 SET firm_file=:
-FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b !firm_base!*.bin 2^> NUL`) DO SET firm_file=%%F
+FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b "!firm_base!*.bin" 2^> NUL`) DO SET firm_file=%%F
 SET firm_full=!firm_base!!firm_file!
 IF EXIST !firm_full! (
   CALL :log "Firmware found - with this script"
@@ -82,9 +83,9 @@ IF EXIST !firm_full! (
 )
 
 SET firm_base=%appdata%\..\Local\Temp\
-FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /od !firm_base!arduino_build_* 2^> NUL`) DO SET firm_sub=%%F\
+FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /od "!firm_base!arduino_build_*" 2^> NUL`) DO SET firm_sub=%%F\
 SET firm_base=!firm_base!!firm_sub!
-FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /od !firm_base!*.bin 2^> NUL`) DO SET firm_file=%%F
+FOR /F "tokens=* USEBACKQ" %%F IN (`dir /b /od "!firm_base!*.bin" 2^> NUL`) DO SET firm_file=%%F
 SET firm_full=!firm_base!!firm_file!
 IF EXIST !firm_full! (
   CALL :log "Firmware found - with Arduino IDE"
@@ -154,9 +155,9 @@ CALL :log ""
 REM === Execute flashing ===================================================
 
 
-SET cmd=%tool_full%  -cd nodemcu  -cb 512000  -cp %com_sel%  -cf %firm_full%
+SET cmd="%tool_full%"  -cd nodemcu  -cb 512000  -cp %com_sel%  -cf "%firm_full%"
 CALL :log "Command"
-CALL :log "  %cmd%"
+CALL :log "  %cmd:"='%" & REM any double quote (") in cmd will break :log, so replace with single quote (')
 CALL :msgbox "Confirm flashing of '%firm_file%' to '%com_sel%'.\n\nNote: flashing will take up to 30 seconds."  1  "Confirm"
 SET cmd_ack=%input%
 IF %cmd_ack% NEQ 1 (
@@ -186,8 +187,8 @@ REM === Terminate ===========================================================
 :success
 CALL :log ""
 CALL :log "Completed successfully"
-CALL :log "  See %LOGFILE% for a copy of this output"
-CALL :msgbox "Success\n\nSee %LOGFILE% for log."  0  "Information"
+CALL :log "  See '%LOGFILE%' for a copy of this output"
+CALL :msgbox "Success\n\nSee '%LOGFILE%' for log."  0  "Information"
 CALL :rm_vbs
 EXIT /B 0
 
@@ -199,7 +200,7 @@ REM === Subroutines =========================================================
 CALL :log ""
 CALL :log "Aborted"
 CALL :log "  !fail_msg!"
-CALL :log "  See %LOGFILE% for a copy of this output"
+CALL :log "  See '%LOGFILE%' for a copy of this output"
 CALL :msgbox "%fail_msg%"  0  "Critical Error"
 CALL :rm_vbs
 EXIT /B 1
