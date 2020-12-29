@@ -37,6 +37,7 @@ a copy of the esptool.
 As of 2020, I have added the [esptool binary](https://github.com/igrr/esptool-ck/releases/download/0.4.13/esptool-0.4.13-win32.zip) 
 to this project, to make it even more "one-click".
 
+
 ### Find firmware image
 By default the `flash.cmd` script looks for a binary firmware file 
 (a file ending in `*.bin`) in the same directory as the script itself. 
